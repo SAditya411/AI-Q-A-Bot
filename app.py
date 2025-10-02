@@ -3,7 +3,7 @@ import openai
 import streamlit as st
 
 # Use environment variable for API key (safer)
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.getenv("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")
 
 # --------------------
 # Helper functions
