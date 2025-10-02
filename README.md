@@ -4,6 +4,11 @@
 This is a **Text Summarizer Web App** built using **Streamlit** and **Hugging Face API**. Originally, the app also included a **Q&A feature**, but it has been commented out due to API constraints.
 
 ---
+## **Live Demo**
+
+Access the deployed Text Summarizer here:  
+
+[**View Live App**](https://ai-q-a-bot-5czm.onrender.com/)
 
 ## **Project Features**
 
@@ -174,5 +179,6 @@ my-app/
 ├─ requirements.txt      # Python dependencies
 ├─ start.sh (optional)   # For Render deployment
 └─ README.md             # This file
+
 
 
