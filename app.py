@@ -8,9 +8,9 @@ import streamlit as st
 HF_API_KEY = os.getenv("HF_API_KEY")
 HF_HEADERS = {"Authorization": f"Bearer {HF_API_KEY}"}
 
-# Example models:
-QA_MODEL = "deepset/roberta-base-squad2"       # Q&A
-SUMMARIZATION_MODEL = "facebook/bart-large-cnn" # Summarization
+# Models
+QA_MODEL = "google/flan-t5-small"          # General Q&A
+SUMMARIZATION_MODEL = "facebook/bart-large-cnn"  # Summarization
 
 HF_API_URL = "https://api-inference.huggingface.co/models/{}"
 
@@ -19,30 +19,30 @@ HF_API_URL = "https://api-inference.huggingface.co/models/{}"
 # --------------------
 def ask_question(question):
     """
-    Ask a question to a Hugging Face QA model.
+    Ask a question using Flan-T5 (does not require context)
     """
-    payload = {"inputs": {"question": question, "context": ""}}  # No context now
+    payload = {"inputs": question}
     response = requests.post(HF_API_URL.format(QA_MODEL), headers=HF_HEADERS, json=payload)
     if response.status_code == 200:
-        answer = response.json()
-        if isinstance(answer, list) and "answer" in answer[0]:
-            return answer[0]["answer"]
-        return str(answer)
+        result = response.json()
+        if isinstance(result, list) and "generated_text" in result[0]:
+            return result[0]["generated_text"]
+        return str(result)
     else:
         return f"Error: {response.status_code} - {response.text}"
 
 
 def summarize_text(text):
     """
-    Summarize text using a Hugging Face model.
+    Summarize text using BART model
     """
     payload = {"inputs": text}
     response = requests.post(HF_API_URL.format(SUMMARIZATION_MODEL), headers=HF_HEADERS, json=payload)
     if response.status_code == 200:
-        summary = response.json()
-        if isinstance(summary, list) and "summary_text" in summary[0]:
-            return summary[0]["summary_text"]
-        return str(summary)
+        result = response.json()
+        if isinstance(result, list) and "summary_text" in result[0]:
+            return result[0]["summary_text"]
+        return str(result)
     else:
         return f"Error: {response.status_code} - {response.text}"
 
@@ -76,4 +76,4 @@ with tab2:
                 summary = summarize_text(text)
             st.success(summary)
         else:
-            st.warning("Please paste some text to summarize.") 
+            st.warning("Please paste some text to summarize.")
