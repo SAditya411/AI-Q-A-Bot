@@ -17,12 +17,11 @@ HF_API_URL = "https://api-inference.huggingface.co/models/{}"
 # --------------------
 # Helper functions
 # --------------------
-def ask_question(question, context=""):
+def ask_question(question):
     """
     Ask a question to a Hugging Face QA model.
-    Optional: you can provide context for better answers.
     """
-    payload = {"inputs": {"question": question, "context": context}}
+    payload = {"inputs": {"question": question, "context": ""}}  # No context now
     response = requests.post(HF_API_URL.format(QA_MODEL), headers=HF_HEADERS, json=payload)
     if response.status_code == 200:
         answer = response.json()
@@ -60,11 +59,10 @@ tab1, tab2 = st.tabs(["💬 Q&A Bot", "📝 Text Summarizer"])
 with tab1:
     st.header("Ask me anything!")
     question = st.text_input("Enter your question here:")
-    context = st.text_area("Optional: Provide context for better answers")
     if st.button("Get Answer", key="qa"):
         if question.strip():
             with st.spinner("Thinking..."):
-                answer = ask_question(question, context)
+                answer = ask_question(question)
             st.success(answer)
         else:
             st.warning("Please enter a question.")
