@@ -29,8 +29,7 @@ This is a **Text Summarizer Web App** built using **Streamlit** and **Hugging Fa
 1. Clone the repository:
 
 ```bash
-git clone <your-repo-url>
-cd <your-repo-folder>
+git clone <https://github.com/SAditya411/AI-Q-A-Bot.git>
 ```
 
 2. Create a Python virtual environment:
@@ -175,4 +174,5 @@ my-app/
 ├─ requirements.txt      # Python dependencies
 ├─ start.sh (optional)   # For Render deployment
 └─ README.md             # This file
+
 
